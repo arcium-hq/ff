@@ -14,16 +14,22 @@ pub(crate) fn generate(
     base: &proc_macro2::TokenStream,
     exponent: BigUint,
 ) -> proc_macro2::TokenStream {
-    let steps = build_addition_chain(exponent.clone());
+    let steps = build_addition_chain(exponent);
     // last_usage[i] indicates the last usage of the i-th temporary variable.
-    let last_usage = steps.iter().enumerate().fold(Vec::new(), |mut acc, (n, step)| {
-        acc.push(n);
-        match step {
-            Step::Double { index } => acc[*index] = n,
-            Step::Add { left, right } => {acc[*right] = n; acc[*left] = n}
-        }
-        acc
-    });
+    let last_usage = steps
+        .iter()
+        .enumerate()
+        .fold(Vec::new(), |mut acc, (n, step)| {
+            acc.push(n);
+            match step {
+                Step::Double { index } => acc[*index] = n,
+                Step::Add { left, right } => {
+                    acc[*left] = n;
+                    acc[*right] = n;
+                }
+            }
+            acc
+        });
     // drops is the ordered sequence of possible drops of the temporary variable
     // the first component is the variable to drop, the second is when to drop it
     let drops: Vec<(usize, usize)> = {
@@ -39,7 +45,10 @@ pub(crate) fn generate(
     // the number of variables that have been used so far.
     let mut n_vars = 0usize;
     // give code for using a free variable, and the corresponding ident
-    fn get_free_variable(v: &mut Vec<Ident>, n_vars: &mut usize) -> (proc_macro2::TokenStream, Ident) {
+    fn get_free_variable(
+        v: &mut Vec<Ident>,
+        n_vars: &mut usize,
+    ) -> (proc_macro2::TokenStream, Ident) {
         if let Some(last) = v.pop() {
             (quote! { #last }, last)
         } else {
