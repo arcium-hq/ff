@@ -85,8 +85,18 @@ pub(crate) fn generate(
             Step::Add { left, right } => {
                 let left = &tmps[left];
                 let right = &tmps[right];
-                quote! {
-                    #out_code = #left * #right;
+                if left.to_string() == out.to_string() {
+                    quote! {
+                        #left *= #right;
+                    }
+                } else if right.to_string() == out.to_string() {
+                    quote! {
+                        #right *= #left;
+                    }
+                } else {
+                    quote! {
+                        #out_code = #left * #right;
+                    }
                 }
             }
         });
