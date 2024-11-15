@@ -12,6 +12,7 @@ use std::iter;
 use std::str::FromStr;
 
 mod pow_fixed;
+mod addchain;
 
 enum ReprEndianness {
     Big,
