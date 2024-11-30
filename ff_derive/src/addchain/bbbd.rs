@@ -79,8 +79,8 @@ fn chain(n: BigUint, k: BigUint) -> Chain {
 
 #[cfg(test)]
 mod tests {
-    use std::str::FromStr;
     use num_bigint::BigUint;
+    use std::str::FromStr;
 
     use super::{minchain, Chain};
 
@@ -115,5 +115,4 @@ mod tests {
         let a = minchain(BigUint::from_str("357686312646216567629135").unwrap());
         assert!(!a.has_duplicates());
     }
-
 }

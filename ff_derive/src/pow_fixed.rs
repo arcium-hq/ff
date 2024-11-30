@@ -1,9 +1,9 @@
 //! Fixed-exponent variable-base exponentiation using addition chains.
 
+use crate::addchain::{build_addition_chain, Step};
 use num_bigint::BigUint;
 use quote::quote;
 use syn::Ident;
-use crate::addchain::{build_addition_chain, Step};
 
 /// Returns t{n} as an ident.
 fn get_temp(n: usize) -> Ident {

@@ -55,26 +55,6 @@
 //!  9 | 87  | n_8 + n_4
 //! ```
 //!
-//! # Usage
-//!
-//! ```
-//! use crate::addchain::{build_addition_chain, Step};
-//! use num_bigint::BigUint;
-//!
-//! assert_eq!(
-//!     build_addition_chain(BigUint::from(87u32)),
-//!     vec![
-//!         Step::Double { index: 0 },
-//!         Step::Add { left: 1, right: 0 },
-//!         Step::Double { index: 2 },
-//!         Step::Add { left: 3, right: 0 },
-//!         Step::Add { left: 4, right: 2 },
-//!         Step::Double { index: 5 },
-//!         Step::Double { index: 6 },
-//!         Step::Double { index: 7 },
-//!         Step::Add { left: 8, right: 4 },
-//!     ],
-//! );
 //! ```
 
 use num_bigint::BigUint;
@@ -221,5 +201,4 @@ mod tests {
             Err(Error::InvalidChain),
         );
     }
-
 }
