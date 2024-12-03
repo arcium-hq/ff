@@ -11,6 +11,7 @@ use quote::TokenStreamExt;
 use std::iter;
 use std::str::FromStr;
 
+mod addchain;
 mod pow_fixed;
 
 enum ReprEndianness {
@@ -116,8 +117,12 @@ impl ReprEndianness {
     attributes(PrimeFieldModulus, PrimeFieldGenerator, PrimeFieldReprEndianness)
 )]
 pub fn prime_field(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    prime_field_2(input.into()).into()
+}
+
+fn prime_field_2(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream {
     // Parse the type definition
-    let ast: syn::DeriveInput = syn::parse(input).unwrap();
+    let ast: syn::DeriveInput = syn::parse2(input).unwrap();
 
     // We're given the modulus p of the prime field
     let modulus: BigUint = fetch_attr("PrimeFieldModulus", &ast.attrs)
@@ -1276,7 +1281,7 @@ fn prime_field_impl(
                     // `0xfff... >> REPR_SHAVE_BITS` overflows. So use `checked_shr` instead.
                     // This is always sufficient because we will have at most one spare limb
                     // to accommodate values of up to twice the modulus.
-                    tmp.0.as_mut()[#top_limb_index] &= 0xffffffffffffffffu64.checked_shr(REPR_SHAVE_BITS).unwrap_or(0);
+                    tmp.0[#top_limb_index] &= 0xffffffffffffffffu64.checked_shr(REPR_SHAVE_BITS).unwrap_or(0);
 
                     if tmp.is_valid() {
                         return tmp
@@ -1399,5 +1404,22 @@ fn prime_field_impl(
                 self.reduce();
             }
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn test() {
+        let blabla = quote! {
+        #[PrimeFieldModulus = "7237005577332262213973186563042994240857116359379907606001950938285454250989"]
+        #[PrimeFieldGenerator = "2"]
+        #[PrimeFieldReprEndianness = "little"]
+        pub struct ScalarField([u64; 4]);
+
+        };
+        let y = prime_field_2(blabla);
+        //panic!("{}", y);
     }
 }

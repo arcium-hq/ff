@@ -20,7 +20,6 @@ bits = []
 proc-macro = true
 
 [dependencies]
-addchain = "0.2"
 num-bigint = "0.3"
 num-traits = "0.2"
 num-integer = "0.1"

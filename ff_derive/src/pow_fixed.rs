@@ -1,6 +1,6 @@
 //! Fixed-exponent variable-base exponentiation using addition chains.
 
-use addchain::{build_addition_chain, Step};
+use crate::addchain::{build_addition_chain, Step};
 use num_bigint::BigUint;
 use quote::quote;
 use syn::Ident;
@@ -85,8 +85,18 @@ pub(crate) fn generate(
             Step::Add { left, right } => {
                 let left = &tmps[left];
                 let right = &tmps[right];
-                quote! {
-                    #out_code = #left * #right;
+                if left.to_string() == out.to_string() {
+                    quote! {
+                        #left *= #right;
+                    }
+                } else if right.to_string() == out.to_string() {
+                    quote! {
+                        #right *= #left;
+                    }
+                } else {
+                    quote! {
+                        #out_code = #left * #right;
+                    }
                 }
             }
         });
