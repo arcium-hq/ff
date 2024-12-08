@@ -1,6 +1,6 @@
 [package]
 name = "ff_derive"
-version = "0.13.1"
+version = "0.13.2"
 authors = [
     "Sean Bowe <ewillbefull@gmail.com>",
     "Jack Grigg <thestr4d@gmail.com>",
@@ -20,6 +20,7 @@ bits = []
 proc-macro = true
 
 [dependencies]
+addchain = { version = "0.2.1", registry = "arcium" }
 num-bigint = "0.3"
 num-traits = "0.2"
 num-integer = "0.1"

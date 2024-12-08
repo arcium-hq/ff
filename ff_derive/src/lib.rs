@@ -11,7 +11,6 @@ use quote::TokenStreamExt;
 use std::iter;
 use std::str::FromStr;
 
-mod addchain;
 mod pow_fixed;
 
 enum ReprEndianness {
