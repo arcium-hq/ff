@@ -1,16 +1,12 @@
 [package]
-name = "ff_derive"
+name = "ff-derive-arcium-fork"
+description = "Procedural macro library used to build custom prime field implementations (Arcium fork)"
 version = "0.13.2"
-authors = [
-    "Sean Bowe <ewillbefull@gmail.com>",
-    "Jack Grigg <thestr4d@gmail.com>",
-]
-description = "Procedural macro library used to build custom prime field implementations"
-documentation = "https://docs.rs/ff-derive/"
-homepage = "https://github.com/zkcrypto/ff"
-license = "MIT/Apache-2.0"
-repository = "https://github.com/zkcrypto/ff"
 edition = "2021"
+license = "MIT/Apache-2.0"
+homepage = "https://www.arcium.com"
+repository = "https://github.com/arcium-hq/ff"
+documentation = "https://docs.rs/ff-derive/"
 
 [features]
 # enabled when generating bitvec code utilizing the version of ff's bitvec
@@ -20,7 +16,7 @@ bits = []
 proc-macro = true
 
 [dependencies]
-addchain = { version = "0.2.1", registry = "arcium" }
+addchain = { package = "addchain-arcium-fork", version = "0.2.1" }
 num-bigint = "0.3"
 num-traits = "0.2"
 num-integer = "0.1"

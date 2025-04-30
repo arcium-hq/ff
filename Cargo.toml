@@ -1,23 +1,18 @@
 [package]
-name = "ff"
+name = "ff-arcium-fork"
+description = "Library for building and interfacing with finite fields (Arcium fork)"
 version = "0.13.2"
-authors = [
-    "Sean Bowe <ewillbefull@gmail.com>",
-    "Jack Grigg <thestr4d@gmail.com>",
-]
-description = "Library for building and interfacing with finite fields"
-readme = "README.md"
-documentation = "https://docs.rs/ff/"
-homepage = "https://github.com/zkcrypto/ff"
-license = "MIT/Apache-2.0"
-repository = "https://github.com/zkcrypto/ff"
 edition = "2021"
-publish = ["arcium"]
+license = "MIT/Apache-2.0"
+homepage = "https://www.arcium.com"
+readme = "README.md"
+repository = "https://github.com/arcium-hq/ff"
+documentation = "https://docs.rs/ff/"
 
 [dependencies]
 bitvec = { version = "1", default-features = false, optional = true }
 byteorder = { version = "1", default-features = false, optional = true }
-ff_derive = { version = "0.13.2", path = "ff_derive", optional = true, registry = "arcium" }
+ff_derive = { package = "ff-derive-arcium-fork", version = "0.13.2", path = "ff_derive", optional = true }
 rand_core = { version = "0.6", default-features = false }
 subtle = { version = "2.2.1", default-features = false, features = ["i128"] }
 
