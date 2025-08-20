@@ -1,7 +1,7 @@
 [package]
 name = "ff-arcium-fork"
 description = "Library for building and interfacing with finite fields (Arcium fork)"
-version = "0.13.2"
+version = "0.14.0-pre.0"
 edition = "2021"
 license = "MIT/Apache-2.0"
 homepage = "https://www.arcium.com"
@@ -12,23 +12,20 @@ documentation = "https://docs.rs/ff/"
 [dependencies]
 bitvec = { version = "1", default-features = false, optional = true }
 byteorder = { version = "1", default-features = false, optional = true }
-ff_derive = { package = "ff-derive-arcium-fork", version = "0.13.2", path = "ff_derive", optional = true }
-rand_core = { version = "0.6", default-features = false }
+ff_derive = { package = "ff-derive-arcium-fork", version = "0.14.0-pre.0", path = "ff_derive", optional = true }
+rand_core = { version = "0.9", default-features = false }
 subtle = { version = "2.2.1", default-features = false, features = ["i128"] }
 
 [dev-dependencies]
 blake2b_simd = "1"
-rand = "0.8"
+rand = "0.9"
 
 [features]
 default = ["bits", "std"]
 alloc = []
-bits = ["bitvec"]
+bits = ["bitvec", "ff_derive?/bits"]
 derive = ["byteorder", "ff_derive"]
 std = ["alloc"]
-# with MSRV 1.60 this could be merged into bits with ff_derive?/bits
-# see PR#72 for more information.
-derive_bits = ["bits", "ff_derive/bits"]
 
 [[test]]
 name = "derive"
