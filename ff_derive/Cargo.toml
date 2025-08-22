@@ -17,7 +17,7 @@ bits = []
 proc-macro = true
 
 [dependencies]
-addchain = { package = "addchain-arcium-fork", version = "0.2.1" }
+addchain = { package = "addchain-arcium-fork", git = "ssh://git@github.com/arcium-hq/addchain.git", branch = "upgrade_num_bigint_dependency" }
 num-bigint = "0.4.6"
 num-traits = "0.2"
 num-integer = "0.1"
